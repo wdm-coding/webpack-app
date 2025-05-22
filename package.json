@@ -4,7 +4,9 @@
   "description": "",
   "private": true,
   "scripts": {
-    "dev": "webpack serve --config ./webpack-config/config-base/webpack.dev.js"
+    "dev": "webpack serve --config ./webpack-config/config-base/webpack.dev.js",
+    "build:dev": "webpack --config ./webpack-config/config-base/webpack.dev.js",
+    "build:prod": "webpack --config ./webpack-config/config-base/webpack.prod.js"
   },
   "keywords": [],
   "author": "",

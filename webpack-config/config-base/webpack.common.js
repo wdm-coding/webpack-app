@@ -1,7 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+console.log('context',path.resolve(__dirname, '../../'),);
 
 module.exports = {
+  context: path.resolve(__dirname, 'src'),
   // 入口文件
   entry: './src/main.js',
   // 输出配置
