@@ -16,9 +16,22 @@ module.exports = merge(webpackCommonConf,{
     //   type: 'umd' // 打包后的库暴露方式
     // }
   },
+  // 源代码映射
+  devtool: 'eval-cheap-module-source-map',
   // 开发服务器
   devServer: {
-    static: './dist',
-    hot: true
+    client:{ // 客户端配置
+      overlay: false, // 当出现编译错误或警告时，在浏览器中不显示全屏覆盖。
+      progress: false, // 在浏览器控制台显示编译进度
+    },
+    compress: true, // 启用gzip压缩
+    host:'localhost', // 主机名
+    hot: true, // 开启热更新
+    open: true, // 启动后自动打开浏览器
+    port: 8082, // 设置端口号
+    proxy:{// 代理配置
+
+
+    }
   }
 });
