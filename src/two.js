@@ -1,1 +1,0 @@
-console.log('two.js 已加载')

@@ -1,0 +1,7 @@
+#app{
+  height: 100px;
+  width: 100px;
+  background: url('./inline/logo.jpeg') no-repeat center;
+  background-size: 100% 100%;
+  transform: translate(0.0);
+}
