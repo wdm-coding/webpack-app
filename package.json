@@ -8,9 +8,9 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "rimraf ./dev-dist && rimraf ./prod-dist && webpack serve --config ./webpack-config/webpack.dev.js",
-    "build:dev": "webpack --config ./webpack-config/webpack.dev.js",
-    "build:prod": "webpack --config ./webpack-config/webpack.prod.js"
+    "dev": "rimraf ./dist && webpack serve --config ./webpack.config.js",
+    "build:dev": "webpack --config ./webpack.config.js",
+    "build:prod": "webpack --config ./webpack.config.js"
   },
   "keywords": [],
   "author": "",
