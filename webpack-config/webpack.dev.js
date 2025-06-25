@@ -21,7 +21,7 @@ module.exports = merge(webpackCommonConf,{
     },
     compress: true, // 启用gzip压缩
     hot: true, // 开启热更新
-    open: true, // 启动后自动打开浏览器
+    open: false, // 启动后自动打开浏览器
     port: 8082, // 设置端口号
     proxy: [{
       context: ['/api'], // 需要代理的路径

@@ -3,10 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "private": true,
+  "sideEffects": [
+    "*.css",
+    "*.scss"
+  ],
   "scripts": {
     "dev": "rimraf ./dev-dist && rimraf ./prod-dist && webpack serve --config ./webpack-config/webpack.dev.js",
-    "build:dev": "rimraf ./dev-dist && webpack --config ./webpack-config/webpack.dev.js",
-    "build:prod": "rimraf ./prod-dist && webpack --config ./webpack-config/webpack.prod.js"
+    "build:dev": "webpack --config ./webpack-config/webpack.dev.js",
+    "build:prod": "webpack --config ./webpack-config/webpack.prod.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +30,7 @@
     "rimraf": "^6.0.1",
     "sass": "^1.89.2",
     "style-loader": "^4.0.0",
+    "terser-webpack-plugin": "^5.3.14",
     "webpack": "^5.99.9",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"

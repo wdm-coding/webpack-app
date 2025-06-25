@@ -2,44 +2,35 @@ const path = require("path")
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
 	context: path.resolve(__dirname, "../"),
 	entry: {
-		appA: {
-			import: "/src/appA/main.js", //
-			filename: "appA.js", // 输出文件名
+		main: {
+			import: "/src/main.js", //
+			filename: "main.js", // 输出文件名
 			dependOn: "lodash", // 当前入口所依赖的入口。它们必须在该入口被加载前被加载 loadsh。
 		},
-		lodash: "lodash",
-		appB:{
-			import: "/src/appB/main.js",
-			filename: "appB.js",
-		}
+		lodash: "lodash"
 	},
 	// 插件配置
 	plugins: [
 		// 输出HTML文件
 		new HtmlWebpackPlugin({
-			filename: "appA.html",
-			template: path.resolve(__dirname, "../src/appA/index.html"),
-			chunks: ["appA", "lodash"], // 输出的html文件中包含的入口文件
+			template: path.resolve(__dirname, "../src/index.html"),// 输出的html文件中包含的入口文件
 			templateParameters: {
 				title: "webpack打包测试",
 			},
 		}),
-		new HtmlWebpackPlugin({
-			filename: "appB.html",
-			chunks: ["appB"],// 输出的html文件中包含的入口文件
-			template: path.resolve(__dirname, "../src/appB/index.html"),
-		}),
 		new MiniCssExtractPlugin({
-			filename: "[name].[contenthash].css", // 入口chunk的css文件命名
-			chunkFilename: "[id].[contenthash].css", // 非入口chunk的css文件命名(异步引入的css文件命名)
-		}),
+      filename: '[name].[contenthash].css',
+      chunkFilename: '[id].css'
+    })
 	],
 	// 优化配置
 	optimization: {
 		minimizer: [
+			// 压缩css文件
 			new CssMinimizerPlugin({
 				test: /\.css$/, // 匹配输出的css文件
 				minify: CssMinimizerPlugin.cssnanoMinify, // 使用cssnano压缩css文件
@@ -55,7 +46,17 @@ module.exports = {
 						},
 					],
 				},
-			}), // 压缩css文件
+			}), 
+			// 移除console语句
+			new TerserPlugin({
+        terserOptions: {
+          compress: {
+            drop_console: true, // 移除所有console
+            // 或者指定要移除的console类型
+            // drop_console: ['log', 'info', 'warn', 'error'] 
+          },
+        },
+      }),
 		],
 		splitChunks:{
 			chunks:'all', // 分割代码块的方式，可选值：all、async、initial和none。默认为async
