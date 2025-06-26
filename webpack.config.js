@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserPlugin = require("terser-webpack-plugin")
+const ESLintPlugin = require('eslint-webpack-plugin');
 module.exports = () => {
 	const config = {
 		// 模式配置
@@ -10,7 +11,7 @@ module.exports = () => {
 		// 入口配置
 		entry: {
 			main: {
-				import: './src/client/main.js', // client的入口路径
+				import: './src/main.js', // client的入口路径
 				filename: "main.js", // 输出文件名
 			},
 		},
@@ -24,11 +25,20 @@ module.exports = () => {
 		plugins: [
 			// 输出HTML文件
 			new HtmlWebpackPlugin({
-				template: "./build/index.html", // 输出的html文件中包含的入口文件
+				template: "./src/index.html", // 输出的html文件中包含的入口文件
 			}),
+			// 提取css文件到单独的文件中，并压缩css文件
 			new MiniCssExtractPlugin({
 				filename: "[name].[contenthash].css",
 				chunkFilename: "[id].css",
+			}),
+			// ESLint插件配置
+			new ESLintPlugin({
+				context: 'src',// 指定检查的目录
+				extensions: ['js', 'jsx'], // 需要检查的文件扩展名
+				exclude: ['node_modules'], // 排除node_modules
+				overrideConfigFile: './package.json',
+				fix: true // 自动修复
 			}),
 		],
 		// 优化配置
