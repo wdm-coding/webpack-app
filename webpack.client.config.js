@@ -4,32 +4,27 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserPlugin = require("terser-webpack-plugin")
 module.exports = () => {
-	const context = path.resolve(__dirname, "../webpack-app/")
-	console.log('context:', context)
 	const config = {
-		// 文件路径配置
-		context,
 		// 模式配置
 		mode:'development',
 		// 入口配置
 		entry: {
 			main: {
-				import: path.resolve(context, "src/main.js"), // 修正后的入口路径
+				import: './src/client/main.js', // client的入口路径
 				filename: "main.js", // 输出文件名
 			},
 		},
 		// 输出配置
 		output: {
 			filename: "[name].[contenthash].js", // 打包后的文件名，使用contenthash防止缓存问题
-			path: path.resolve(__dirname, "../dist"), // 打包后的目录
+			path: path.resolve(__dirname, 'build'), // 打包后的目录
 			clean: true, // 打包前清理/dist文件夹
-			chunkFilename: "chunk.[contenthash].js", // 异步引入的js文件命名规则
 		},
 		// 插件配置
 		plugins: [
 			// 输出HTML文件
 			new HtmlWebpackPlugin({
-				template: path.resolve(context, "src/index.html"), // 输出的html文件中包含的入口文件
+				template: "./build/index.html", // 输出的html文件中包含的入口文件
 			}),
 			new MiniCssExtractPlugin({
 				filename: "[name].[contenthash].css",
@@ -133,7 +128,7 @@ module.exports = () => {
 					use: {
 						loader: "babel-loader",
 						options: {
-							presets: ["@babel/preset-env"], // 使用默认配置
+							presets: ["@babel/preset-env","@babel/preset-react"], // 使用默认配置
 							cacheDirectory: true, // 缓存编译结果 加快编译速度
 						},
 					},
@@ -151,7 +146,7 @@ module.exports = () => {
 		},
 		resolve: {
 			alias: {
-				 "@": path.resolve(__dirname, "../src"), // 添加上一级目录
+				 "@": path.resolve(__dirname, "./src"), // 添加上一级目录
 			},
 		},
 		// 源代码映射
@@ -167,10 +162,13 @@ module.exports = () => {
 			hot: true, // 开启热更新
 			open: false, // 启动后自动打开浏览器
 			port: 8082, // 设置端口号
+			devMiddleware: {
+				writeToDisk: true, // 将打包后的文件写入磁盘
+			},
 			proxy: [
 				{
 					context: ["/api"], // 需要代理的路径
-					target: "http://localhost:8081", // 目标地址
+					target: "http://localhost:3000", // 目标地址
 					changeOrigin: true, // 开启代理，在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样就不会有跨域问题
 					pathRewrite: { "^/api": "" }, // 重写路径
 					secure: false, // 如果是https接口，需要配置这个参数

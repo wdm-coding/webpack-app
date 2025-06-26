@@ -1,0 +1,20 @@
+/*!**********************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[0].use[2]!./src/client/index.css ***!
+  \**********************************************************************************************************************************************/
+#root{
+  height: 100px;
+  width: 100px;
+  background: url(03f1603e9f93d396cb04.jpeg) no-repeat center;
+  background-size: 100% 100%;
+  -webkit-transform: translate(0.0);
+          transform: translate(0.0);
+}
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[1].use[2]!./node_modules/sass-loader/dist/cjs.js!./src/client/index.scss ***!
+  \**************************************************************************************************************************************************************************************/
+#ssr .ssr_inner_app {
+  color: #fff000;
+  font-weight: 600;
+  -webkit-transform: translateX(100px);
+          transform: translateX(100px);
+}
