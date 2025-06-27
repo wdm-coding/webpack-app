@@ -4,23 +4,18 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
 const TerserPlugin = require('terser-webpack-plugin');
 module.exports = {
-	context: path.resolve(__dirname, "../"),
+	mode:'development',
 	entry: {
 		main: {
-			import: "/src/main.js", //
+			import: "./src/main.js", //
 			filename: "main.js", // 输出文件名
-			dependOn: "lodash", // 当前入口所依赖的入口。它们必须在该入口被加载前被加载 loadsh。
-		},
-		lodash: "lodash"
+		}
 	},
 	// 插件配置
 	plugins: [
 		// 输出HTML文件
 		new HtmlWebpackPlugin({
-			template: path.resolve(__dirname, "../src/index.html"),// 输出的html文件中包含的入口文件
-			templateParameters: {
-				title: "webpack打包测试",
-			},
+			template: "./src/index.html",// 输出的html文件中包含的入口文件
 		}),
 		new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
@@ -123,19 +118,6 @@ module.exports = {
 				},
 			},
 			{
-				test: /inline\/.*/,
-				type: 'asset/source',
-        generator: {
-          encoding: 'utf8'
-        },
-				// use:{
-				// 	loader: 'raw-loader',
-				// 	options: {
-				// 		esModule: false,
-				// 	}
-				// }
-			},
-			{
 				test: /\.(png|jpg|jpeg|gif)$/i,
         type: 'asset',
         parser: {
@@ -151,7 +133,25 @@ module.exports = {
       '@': path.resolve(__dirname, 'src')
     }
   },
-	externals: {
-		myVue: "Vue",
-	},
+  // 源代码映射
+  devtool: 'eval-cheap-module-source-map',
+  // 开发服务器
+  devServer: {
+    client:{ // 客户端配置
+      overlay: false, // 当出现编译错误或警告时，在浏览器中不显示全屏覆盖。
+      progress: false, // 在浏览器控制台显示编译进度
+    },
+    compress: true, // 启用gzip压缩
+    hot: true, // 开启热更新
+    open: false, // 启动后自动打开浏览器
+    port: 8082, // 设置端口号
+    proxy: [{
+      context: ['/api'], // 需要代理的路径
+      target: 'http://localhost:8081', // 目标地址
+      changeOrigin: true, // 开启代理，在本地会创建一个虚拟服务端，然后发送请求的数据，并同时接收请求的数据，这样就不会有跨域问题
+      pathRewrite: { '^/api': '' }, // 重写路径
+      secure: false, // 如果是https接口，需要配置这个参数
+      logLevel: 'debug' // 日志级别
+    }]
+  }
 }
