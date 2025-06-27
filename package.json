@@ -8,7 +8,7 @@
     "*.scss"
   ],
   "scripts": {
-    "dev": "webpack serve --config ./webpack.config.js",
+    "dev": "webpack serve --config ./webpack.react.config.js",
     "build:dev": "webpack --config ./webpack.config.js",
     "build:prod": "webpack --config ./webpack.config.js"
   },
@@ -17,14 +17,18 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.27.4",
+    "@babel/plugin-transform-runtime": "^7.27.4",
     "@babel/preset-env": "^7.27.2",
+    "@babel/preset-react": "^7.27.1",
     "autoprefixer": "^10.4.21",
     "babel-loader": "^10.0.0",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^7.1.2",
     "css-minimizer-webpack-plugin": "^7.0.2",
     "glob": "^11.0.3",
     "html-webpack-plugin": "^5.6.3",
     "mini-css-extract-plugin": "^2.9.2",
+    "mockjs": "^1.1.0",
     "postcss-loader": "^8.1.1",
     "raw-loader": "^4.0.2",
     "rimraf": "^6.0.1",
@@ -36,6 +40,11 @@
     "webpack-dev-server": "^5.2.1"
   },
   "dependencies": {
+    "@babel/runtime": "^7.27.6",
+    "axios": "^1.10.0",
+    "core-js": "^3.43.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "sass-loader": "^16.0.5"
   }
 }
